@@ -9,7 +9,7 @@ class ChangeMachineTest < Minitest::Test
   end
 
   def fill_change_machine(pennies = 0, nickels = 0, dimes = 0, quarters = 0)
-    @change_machine.fill([[:penny, pennies], [:nickel, nickels], [:dime, dimes], [:quarter, quarters]])
+    @change_machine.fill([[:pennies, pennies], [:nickels, nickels], [:dimes, dimes], [:quarters, quarters]])
   end
 
   def test_it_exists
@@ -41,8 +41,8 @@ class ChangeMachineTest < Minitest::Test
   end
 
   def test_it_can_be_filled_with_mixed_change
-    @change_machine.fill([[:pennies, 2], [:quarters, 3], [:dime, 1], [:nickels, 4]])
     expected_repo = { pennies: 2, nickels: 4, dimes: 1, quarters: 3 }
+    @change_machine.fill(expected_repo.to_a)
 
     assert_equal expected_repo, @change_machine.coin_repo
   end
