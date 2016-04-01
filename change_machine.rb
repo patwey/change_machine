@@ -36,45 +36,35 @@ class ChangeMachine
   end
 
   def _make_change(cents_owed)
-    coins_needed = necessary_coins(cents_owed)
-    if pull(coins_needed)
-      coins_needed
-    else
-      'Unable to make change'
-    end
+    pull(cents_owed) || 'Unable to make change'
   end
 
-  def necessary_coins(cents_owed)
-    coins = {}
-    plurals.keys.reverse.each do |coin|
-      coin_count = cents_owed / worth[coin]
-      coins[plurals[coin]] = coin_count
-      cents_owed -= coin_count * worth[coin]
-    end
-    coins.to_a
-  end
-
-  def worth
+  def coin_worth
     { quarter: 25,
       dime: 10,
       nickel: 5,
       penny: 1 }
   end
 
-  def pull(coins)
-    return false unless coins.is_a?(Array)
+  def pull(cents_owed)
+    return unless cents_owed > 0
 
-    coins.each do |coin, count|
-      pluralized_coin = pluralize_coin(coin)
-      if sufficent_coins(pluralized_coin, count)
-        @coin_repo[pluralized_coin] -= count
-      else
-        return false
+    coins = {}
+    coin_worth.each do |coin, value|
+      plural_coin = plurals[coin]
+      coin_count = cents_owed / value
+      if sufficient_coins(plural_coin, coin_count) && coin_count > 0
+        coins[plural_coin] = coin_count
+        @coin_repo[plural_coin] -= coin_count
+        cents_owed -= coin_count * value
       end
     end
+
+    return if cents_owed > 0
+    coins.to_a
   end
 
-  def sufficent_coins(type, count)
+  def sufficient_coins(type, count)
     @coin_repo[type] >= count
   end
 end

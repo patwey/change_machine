@@ -52,7 +52,7 @@ class ChangeMachineTest < Minitest::Test
 
     item_cost = 75
     amt_paid = 100
-    expected_change = [[:quarters, 1], [:dimes, 0], [:nickels, 0], [:pennies, 0]]
+    expected_change = [[:quarters, 1]]
 
     assert_equal expected_change, @change_machine.make_change(item_cost, amt_paid)
   end
@@ -71,5 +71,25 @@ class ChangeMachineTest < Minitest::Test
     amt_paid = 100
 
     assert_equal 'Unable to make change', @change_machine.make_change(item_cost, amt_paid)
+  end
+
+  def test_it_will_make_change_less_efficiently_if_it_has_to
+    fill_change_machine(100, 0, 0, 0)
+
+    item_cost = 1
+    amt_paid = 100
+    expected_change = [[:pennies, 99]]
+
+    assert_equal expected_change, @change_machine.make_change(item_cost, amt_paid)
+  end
+
+  def test_it_will_make_mixed_inefficient_change_if_it_has_to
+    fill_change_machine(100, 0, 0, 1)
+
+    item_cost = 70
+    amt_paid = 100
+    expected_change = [[:quarters, 1], [:pennies, 5]]
+
+    assert_equal expected_change, @change_machine.make_change(item_cost, amt_paid)
   end
 end
