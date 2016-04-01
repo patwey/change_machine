@@ -1,0 +1,15 @@
+<h3>Change:</h3>
+
+<% if change.is_a?(String) %>
+  <h5><%= change %></h5>
+<% else %>
+  <ul>
+    <% change.each do |type, count| %>
+      <li><%= type %>: <%= count %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<br><br>
+
+<a href='/machine'>Back to Change Machine</a>

@@ -1,0 +1,24 @@
+<h2>The Change Machine</h2>
+<em>Model #<%= change_machine.object_id %></em>
+
+<h3>Current Reserves:</h3>
+
+<ul>
+  <% change_machine.coin_repo.each do |type, count| %>
+    <li><%= type %>: <%= count %></li>
+  <% end %>
+</ul>
+
+<h3>Change for a Transaction:</h3>
+  <form method='post'>
+    <label for='item_cost'>Item Cost: </label>
+    <input id='item_cost' type='text' name='item_cost' value='0'>
+    <br><br>
+
+    <label for='amount_paid'>Amount Paid: </label>
+    <input id='amount_paid' type='text' name='amount_paid' value='0'>
+    <br>
+
+    <br>
+    <input type='submit' value='Make Change'>
+  </form>
