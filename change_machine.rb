@@ -1,5 +1,5 @@
 class ChangeMachine
-  attr_reader :coin_repo, :plurals, :worth
+  attr_reader :coin_repo
 
   def initialize(coins = [])
     @coin_repo ||= { pennies: 0, nickels: 0, dimes: 0, quarters: 0 }

@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative 'change_machine'
 require 'pry'
+require_relative 'change_machine'
 
 class ChangeMachineTest < Minitest::Test
   def setup
